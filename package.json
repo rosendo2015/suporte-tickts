@@ -1,0 +1,12 @@
+{
+  "name": "suporte-tickts",
+  "version": "1.0.0",
+  "description": "api de gerenciamento de tickts de suporte",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./src/server.js"
+  },
+  "author": "Rosendo Coelho",
+  "license": "ISC"
+}
