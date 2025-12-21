@@ -1,7 +1,7 @@
 {
-  "name": "suporte-tickts",
+  "name": "suporte-tickets",
   "version": "1.0.0",
-  "description": "api de gerenciamento de tickts de suporte",
+  "description": "api de gerenciamento de tickets de suporte",
   "main": "src/server.js",
   "type": "module",
   "scripts": {

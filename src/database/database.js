@@ -35,13 +35,21 @@ export class Database {
       data = data.filter((row) => {
         return Object.entries(filters).some(([key, value]) => {
           return row[key].toLowerCase().includes(value.toLowerCase());
-        });       
+        });
       });
     }
     return data;
   }
-  updete(table, id, data) {
+  
+  update(table, id, data) {
     const rowIndex = this.#database[table].findIndex((row) => row.id === id);
-    console.log(rowIndex, data);
+
+    if (rowIndex > -1) {
+      this.#database[table][rowIndex] = {
+        ...this.#database[table][rowIndex],
+        ...data,
+      };
+      this.#persist();
+    }
   }
 }
