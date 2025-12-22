@@ -33,22 +33,38 @@ export class Database {
 
     if (filters) {
       data = data.filter((row) => {
-        return Object.entries(filters).some(([key, value]) => {
-          return row[key].toLowerCase().includes(value.toLowerCase());
+        return Object.entries(filters).every(([key, value]) => {
+          const field = row[key];
+          if (typeof field === "string") {
+            return field.toLowerCase() === value.toLowerCase();
+          }
+          return field === value;
         });
       });
     }
+
     return data;
   }
-  
-  update(table, id, data) {
-    const rowIndex = this.#database[table].findIndex((row) => row.id === id);
 
+  update(table, id, data) {
+    const rowIndex = this.#database[table]?.findIndex((row) => row.id === id);
+
+    if (rowIndex === -1 || rowIndex === undefined) {
+      return null;
+    }
+
+    this.#database[table][rowIndex] = {
+      ...this.#database[table][rowIndex],
+      ...data,
+    };
+
+    this.#persist();
+    return this.#database[table][rowIndex];
+  }
+  delete(table, id) {
+    const rowIndex = this.#database[table]?.findIndex((row) => row.id === id);
     if (rowIndex > -1) {
-      this.#database[table][rowIndex] = {
-        ...this.#database[table][rowIndex],
-        ...data,
-      };
+      this.#database[table].splice(rowIndex, 1);
       this.#persist();
     }
   }
